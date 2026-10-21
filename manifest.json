@@ -1,0 +1,193 @@
+{
+  "project": "ReturnOps AI",
+  "version": "1.1-supabase-design",
+  "as_of": "2026-10-22",
+  "note": "Documentation blueprint (NOT running application or executed migrations). Uses Supabase PostgreSQL/Auth.",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "de32cb8e0c1dbb4e6d37d0835c213bf29d4719b0a28926b0d4e7ab08dfc4edcc",
+      "size_bytes": 8151
+    },
+    {
+      "path": "assets/architecture.mmd",
+      "sha256": "0790a6451ebe0afb59b78370bea144e5f732d265e8b0442ef23b42c7bc2bfc77",
+      "size_bytes": 724
+    },
+    {
+      "path": "assets/state_machine.mmd",
+      "sha256": "716660942a992b36a0e14caf17c78c67f34da7d9e58d195fb396979d92e8c3de",
+      "size_bytes": 645
+    },
+    {
+      "path": "contracts/backlog.csv",
+      "sha256": "74767defc7c9726ebd958462fec7875c31cdc59f8fab8c8772b6dc7fa3851b9d",
+      "size_bytes": 1541
+    },
+    {
+      "path": "contracts/db_schema.sql",
+      "sha256": "e78a611130c1bf0b350129841c808f893cef91daa71164907dbbe0d78342909e",
+      "size_bytes": 9614
+    },
+    {
+      "path": "contracts/eval_cases.jsonl",
+      "sha256": "5f56bee8fa8b4e661a1e521eaefeaae744f5bdf29fe98289f9fa40061beef948",
+      "size_bytes": 8085
+    },
+    {
+      "path": "contracts/openapi.yaml",
+      "sha256": "d5698a1c05f4c31616a0330737849069482ab958fb039a9b7fcdb35b5bd11e9b",
+      "size_bytes": 11547
+    },
+    {
+      "path": "contracts/policy_rules.yaml",
+      "sha256": "a3f8532e25f9a43619c68204f50bccd658a92ac19b4ab015192c4d364cc7728d",
+      "size_bytes": 1525
+    },
+    {
+      "path": "contracts/seed_data.json",
+      "sha256": "d92e446dae64294f4ab2dd30736d84515918e696362bc3acc31deb529f11902d",
+      "size_bytes": 6526
+    },
+    {
+      "path": "contracts/supabase_rls.sql",
+      "sha256": "7b8462bf3680da7116c373f815a4546804e6f749110e482919fe534ca5e96347",
+      "size_bytes": 1401
+    },
+    {
+      "path": "docs/00_PROJECT_CHARTER.md",
+      "sha256": "cbc20a9839ba3a2da99a6fcc7679e716bfac7d241a1abfa6210e3c8e2942f2f2",
+      "size_bytes": 3675
+    },
+    {
+      "path": "docs/01_PRD.md",
+      "sha256": "e3f58cc9f8a5153e93d690c683385261b736b8df614e2a9986d734c19674c077",
+      "size_bytes": 6298
+    },
+    {
+      "path": "docs/02_DOMAIN_POLICY.md",
+      "sha256": "341c251236e0fb206d30b16d8d28ad3f35182fa900dd1d9daa363309e2c9279d",
+      "size_bytes": 5735
+    },
+    {
+      "path": "docs/03_USER_STORIES_AND_UX.md",
+      "sha256": "56a696ac31e9561079eb07bb1eded377f86ee5efb2d14b43e32080ad1aadbdee",
+      "size_bytes": 3876
+    },
+    {
+      "path": "docs/04_ARCHITECTURE.md",
+      "sha256": "b4d87e2e4b17811d891716a21d7f148a080b70f2f974b3f8beb381c67f209b14",
+      "size_bytes": 8065
+    },
+    {
+      "path": "docs/05_AGENT_AND_TOOLS.md",
+      "sha256": "c0561868caaf9591667c1d9ff83dfce29a91599b81957973ebae8f8b1bfc58c4",
+      "size_bytes": 7196
+    },
+    {
+      "path": "docs/06_RAG_AND_KNOWLEDGE.md",
+      "sha256": "59def0ee73ae7b6ff05ba5f35cf3fdde9b792802f616e217ac04bcbd0e9c8f0f",
+      "size_bytes": 4249
+    },
+    {
+      "path": "docs/07_DATA_MODEL.md",
+      "sha256": "56a558a99917f63a52b72b2cbdaa422b65fb2b72e5d2c18d078a44cc7fa9afdd",
+      "size_bytes": 5865
+    },
+    {
+      "path": "docs/08_API_CONTRACT.md",
+      "sha256": "73d0a88853900966ec697994d4e5f8c8e82ee043a18be6cc32a9e9639e10fde3",
+      "size_bytes": 5118
+    },
+    {
+      "path": "docs/09_SECURITY_PRIVACY.md",
+      "sha256": "7914db08eecb246b779c68ac7dcd982c34037afdeae5457dc121c972d6e95ab0",
+      "size_bytes": 7371
+    },
+    {
+      "path": "docs/10_EVALUATION.md",
+      "sha256": "e71ee4d1b204313dc203823d313e88a5032f1837f60a7858b1b3c7c62ba7d7a3",
+      "size_bytes": 6122
+    },
+    {
+      "path": "docs/11_TEST_STRATEGY.md",
+      "sha256": "db3240b2a80b8ee5b1848fb50a536f23ba0e217f1bff047674d96f9ed3de0a67",
+      "size_bytes": 5050
+    },
+    {
+      "path": "docs/12_ROADMAP_BACKLOG.md",
+      "sha256": "7bb66bb73aa170e4d812d823c227d30dd2949f453c10aaf70f48d6e7ea92043f",
+      "size_bytes": 4660
+    },
+    {
+      "path": "docs/13_DEVOPS_RUNBOOK.md",
+      "sha256": "046c19ff7872e44a2f163e7da87b4a19dfe62b5adc7a7e1149b338755f0814c7",
+      "size_bytes": 4839
+    },
+    {
+      "path": "docs/14_ADRS.md",
+      "sha256": "331a2ae165a91c507d0c2ccd8ebabf81b0c0636e21c5e2303218b357657f1e28",
+      "size_bytes": 4450
+    },
+    {
+      "path": "docs/15_COST_AND_RISKS.md",
+      "sha256": "92296d09931cde48c1a1d45db8979d7c6894ca94b92174dc46d93c28459fad32",
+      "size_bytes": 3755
+    },
+    {
+      "path": "docs/16_DEFINITION_OF_DONE.md",
+      "sha256": "96d8a7388e8b036a9920cae8aaf835687f8ae56a59ffa6bd8e8a86abc84e32b4",
+      "size_bytes": 2236
+    },
+    {
+      "path": "docs/17_AGENT_IMPLEMENTATION_BRIEF.md",
+      "sha256": "e4d0581191aaa3aca9ae50f6eb272dd8a3eee837e04f6832e1efbebc39fb03fa",
+      "size_bytes": 3886
+    },
+    {
+      "path": "docs/18_DEMO_SCRIPT.md",
+      "sha256": "6bc8776ca6f5de122fb44b2d2ee53c1fe0b0f5c6d36ea60151e2292554d27a42",
+      "size_bytes": 2326
+    },
+    {
+      "path": "docs/19_REFERENCES.md",
+      "sha256": "6cacd8f47e104738427867c53b141b159ebe757ec1368a06394fcfda4d8328c0",
+      "size_bytes": 3160
+    },
+    {
+      "path": "docs/20_IMPLEMENTATION_RECIPES.md",
+      "sha256": "782be186cb0d920ff9cb379b82a103160c9fdcef93da4d0af5e45bdd02ee23a3",
+      "size_bytes": 5476
+    },
+    {
+      "path": "docs/21_SUPABASE_IMPLEMENTATION.md",
+      "sha256": "64dc5979eefbe230c7b9eb057a0101ad2623261496706a7adb42e3d00e98bd9a",
+      "size_bytes": 10417
+    },
+    {
+      "path": "examples/.env.supabase.example",
+      "sha256": "6fc0c84de1288a26231a4fef5919e0921122ce65c9c4131212c2e10bb68ccb14",
+      "size_bytes": 1017
+    },
+    {
+      "path": "examples/agent_instructions.md",
+      "sha256": "b15025f8257f9c12a40b56caac781e9368337d08a499b3d2ed457a06882e90c5",
+      "size_bytes": 1699
+    },
+    {
+      "path": "knowledge/POL-2026-001.md",
+      "sha256": "37511c96f42aa2373ffdcc20ec97bd2f303fd05b70b7d05fdc614bd7b19cc395",
+      "size_bytes": 3617
+    },
+    {
+      "path": "templates/ISSUE_TEMPLATE.md",
+      "sha256": "1a50f8fb5d0c20c6d961a10a11ca5d40150a020651d542f8cd9ee6e7fca0b711",
+      "size_bytes": 369
+    },
+    {
+      "path": "templates/PR_TEMPLATE.md",
+      "sha256": "670900454fe9a9aa67abfe3a20d1c53a18561d0cf0fd427d9b539610a039bd18",
+      "size_bytes": 576
+    }
+  ]
+}

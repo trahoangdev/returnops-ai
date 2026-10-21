@@ -1,0 +1,13 @@
+﻿id,title,estimate_hours,priority,acceptance_criteria,status
+RO-001,"Monorepo scaffold, Supabase CLI/Auth/Postgres, FastAPI, migrations, health endpoint",5,P0,Local Supabase boots; RLS verified; `/healthz` 200; db reset reproduces,TODO
+RO-002,"Pure policy evaluator, time-zone rules, category, amount ceiling",8,P0,"POL-001…POL-008 green, no LLM calls",TODO
+RO-003,"Supabase Auth bootstrap, scoped read-order APIs and app RBAC",6,P0,"Auth sub mapping and cross-user 404 tested; seeded orders work",TODO
+RO-004,Customer order/chat UI and return submission form,7,P0,Order picker/chat/return status flows functional,TODO
+RO-005,"Versioned policy model, Markdown ingest, citations",5,P0,Query returns correct `POL-2026-001` rule IDs,TODO
+RO-006,Domain return case service + lifecycle + idempotency,8,P0,"exactly one active case/item, safe replay/conflict",TODO
+RO-007,LangGraph orchestrator + tools + durable checkpoints,10,P0,clarification & valid proposal; restart resumes,TODO
+RO-008,"Reviewer inbox, approval/rejection, proposal hash",7,P0,role checks + stale proposal denial,TODO
+RO-009,Mock refund outbox/worker + concurrency transaction,8,P0,two retries produce one ledger entry,TODO
+RO-010,"Eval runner, dataset growth to 100, experiment reports",10,P0,"strict DB-state grader, per-case trace IDs",TODO
+RO-011,"Security, logging, rate limiting, tool budgets, CI",8,P0,adversarial tests green; traces scrubbed,TODO
+RO-012,"Deploy synthetic demo, README + 3–5m walkthrough",6,P0,clean setup and reproducible benchmark attached,TODO

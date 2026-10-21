@@ -1,0 +1,19 @@
+stateDiagram-v2
+  [*] --> DRAFT
+  DRAFT --> NEEDS_INFO
+  DRAFT --> PENDING_APPROVAL
+  DRAFT --> INELIGIBLE
+  DRAFT --> MANUAL_REVIEW
+  NEEDS_INFO --> PENDING_APPROVAL: facts completed; reevaluate
+  NEEDS_INFO --> MANUAL_REVIEW: cannot verify
+  MANUAL_REVIEW --> ESCALATED
+  PENDING_APPROVAL --> APPROVED: reviewer approves exact proposal
+  PENDING_APPROVAL --> REJECTED: reviewer rejects
+  PENDING_APPROVAL --> CANCELED: customer cancels
+  APPROVED --> REFUND_PENDING: outbox claimed
+  REFUND_PENDING --> REFUNDED: guarded simulated ledger insert
+  INELIGIBLE --> [*]
+  ESCALATED --> [*]
+  REJECTED --> [*]
+  CANCELED --> [*]
+  REFUNDED --> [*]

@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: ReturnOps AI MVP API
+  version: 1.0.0-design
+  description: >-
+    Design-first contract for a fictional e-commerce return assistant.
+    All refunds are simulated database entries. Not a runnable API implementation.
+    Authentication is Supabase Auth bearer access token, verified by FastAPI.
+    ReturnOps customer/reviewer/admin roles are resolved from the application users table, not JWT role claim.
+servers:
+  - url: http://localhost:8000
+    description: Planned local API
+security:
+  - bearerAuth: []
+tags:
+  - name: Orders
+  - name: Conversations
+  - name: Returns
+  - name: Review
+paths:
+  /healthz:
+    get:
+      summary: Liveness
+      security: []
+      responses:
+        '200':
+          description: Alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: {type: string, const: ok}
+  /v1/orders:
+    get:
+      tags: [Orders]
+      summary: List current customer's orders
+      responses:
+        '200':
+          description: Owned orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Order'}
+        '401': {$ref: '#/components/responses/Error'}
+  /v1/orders/{order_id}:
+    get:
+      tags: [Orders]
+      summary: Get customer-owned order; other customer's order returns 404
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200':
+          description: Order
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Order'}
+        '404': {$ref: '#/components/responses/Error'}
+  /v1/conversations:
+    post:
+      tags: [Conversations]
+      summary: Start conversation bound to authenticated customer
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [conversation_id]
+                properties:
+                  conversation_id: {type: string, format: uuid}
+        '401': {$ref: '#/components/responses/Error'}
+  /v1/conversations/{conversation_id}/messages:
+    post:
+      tags: [Conversations]
+      summary: Submit customer turn; no authorized financial mutations
+      parameters:
+        - $ref: '#/components/parameters/ConversationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [message]
+              properties:
+                message: {type: string, minLength: 1, maxLength: 4000}
+      responses:
+        '200':
+          description: Structured agent response
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ChatReply'}
+        '403': {$ref: '#/components/responses/Error'}
+        '503': {$ref: '#/components/responses/Error'}
+  /v1/returns:
+    post:
+      tags: [Returns]
+      summary: Create a return case after customer confirmation
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CreateReturnRequest'}
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ReturnCase'}
+        '409': {$ref: '#/components/responses/Error'}
+        '422': {$ref: '#/components/responses/Error'}
+  /v1/returns/{request_id}:
+    get:
+      tags: [Returns]
+      summary: View authorized case
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Return case
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ReturnCase'}
+        '404': {$ref: '#/components/responses/Error'}
+  /v1/review/queue:
+    get:
+      tags: [Review]
+      summary: Reviewer-only case queue
+      responses:
+        '200':
+          description: Cases
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/ReturnCase'}
+        '403': {$ref: '#/components/responses/Error'}
+  /v1/returns/{request_id}/approval:
+    post:
+      tags: [Review]
+      summary: Reviewer approves/rejects exact frozen proposal
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ApprovalInput'}
+      responses:
+        '200':
+          description: Approved/rejected
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/ApprovalResult'}
+        '403': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+  /v1/internal/returns/{request_id}/mock-refund:
+    post:
+      tags: [Returns]
+      summary: Internal worker-only simulated refund executor
+      description: Must not be reachable from public browser and needs service credentials.
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '200':
+          description: Idempotent simulated ledger result
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [mock_refund_id, status]
+                properties:
+                  mock_refund_id: {type: string, format: uuid}
+                  status: {type: string, const: REFUNDED}
+        '403': {$ref: '#/components/responses/Error'}
+        '409': {$ref: '#/components/responses/Error'}
+  /v1/returns/{request_id}/audit:
+    get:
+      tags: [Returns]
+      summary: Redacted case audit, reviewer or admin only
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Audit events
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/AuditEvent'}
+        '403': {$ref: '#/components/responses/Error'}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    OrderId:
+      name: order_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    ConversationId:
+      name: conversation_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    RequestId:
+      name: request_id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: {type: string, minLength: 8, maxLength: 128}
+  schemas:
+    OrderItem:
+      type: object
+      required: [id, sku, category, status, paid_amount_vnd]
+      properties:
+        id: {type: string, format: uuid}
+        sku: {type: string}
+        category: {type: string, enum: [standard, hygiene, customized, digital, final_sale]}
+        status: {type: string, enum: [PENDING, SHIPPED, DELIVERED, CANCELED]}
+        paid_amount_vnd: {type: integer, minimum: 0}
+        delivered_at: {type: [string, 'null'], format: date-time}
+    Order:
+      type: object
+      required: [id, order_number, placed_at, policy_version_id, items]
+      properties:
+        id: {type: string, format: uuid}
+        order_number: {type: string}
+        placed_at: {type: string, format: date-time}
+        policy_version_id: {type: string}
+        items:
+          type: array
+          items: {$ref: '#/components/schemas/OrderItem'}
+    Citation:
+      type: object
+      required: [rule_id, chunk_id, policy_version_id]
+      properties:
+        rule_id: {type: string}
+        chunk_id: {type: string}
+        policy_version_id: {type: string}
+        section: {type: [string, 'null']}
+    ChatReply:
+      type: object
+      required: [message_id, reply, state, citations, trace_id]
+      properties:
+        message_id: {type: string, format: uuid}
+        reply: {type: string}
+        state: {type: string, enum: [NEEDS_CLARIFICATION, PROPOSAL_READY, DENIED, ESCALATED, STATUS]}
+        citations:
+          type: array
+          items: {$ref: '#/components/schemas/Citation'}
+        proposal: {type: [object, 'null']}
+        trace_id: {type: string}
+    CreateReturnRequest:
+      type: object
+      additionalProperties: false
+      required: [order_id, item_id, reason]
+      properties:
+        order_id: {type: string, format: uuid}
+        item_id: {type: string, format: uuid}
+        reason: {type: string, enum: [changed_mind, damaged, wrong_item, other]}
+        condition: {type: [string, 'null'], enum: [UNUSED, USED, UNKNOWN, null]}
+        packaging_intact: {type: [boolean, 'null']}
+        evidence_refs:
+          type: array
+          maxItems: 5
+          items: {type: string, maxLength: 200}
+    ReturnCase:
+      type: object
+      required: [request_id, status, eligibility, policy_version_id]
+      properties:
+        request_id: {type: string, format: uuid}
+        status: {type: string, enum: [DRAFT, NEEDS_INFO, PENDING_APPROVAL, APPROVED, REFUND_PENDING, REFUNDED, INELIGIBLE, MANUAL_REVIEW, REJECTED, ESCALATED, CANCELED]}
+        eligibility: {type: string, enum: [ELIGIBLE, INELIGIBLE, MANUAL_REVIEW, MISSING_INFO]}
+        proposed_amount_vnd: {type: [integer, 'null'], minimum: 0, maximum: 5000000}
+        policy_version_id: {type: string}
+        proposal_hash: {type: [string, 'null']}
+        version: {type: integer, minimum: 1}
+        citations:
+          type: array
+          items: {$ref: '#/components/schemas/Citation'}
+    ApprovalInput:
+      type: object
+      additionalProperties: false
+      required: [decision, reason, proposal_hash, case_version]
+      properties:
+        decision: {type: string, enum: [APPROVE, REJECT]}
+        reason: {type: string, minLength: 3, maxLength: 1000}
+        proposal_hash: {type: string, pattern: '^[a-f0-9]{64}$'}
+        case_version: {type: integer, minimum: 1}
+    ApprovalResult:
+      type: object
+      required: [approval_id, status, execution]
+      properties:
+        approval_id: {type: string, format: uuid}
+        status: {type: string, enum: [APPROVED, REJECTED]}
+        execution: {type: string, enum: [QUEUED, NOT_APPLICABLE]}
+    AuditEvent:
+      type: object
+      required: [action, created_at]
+      properties:
+        action: {type: string}
+        created_at: {type: string, format: date-time}
+        actor_type: {type: string}
+        old_state: {type: [string, 'null']}
+        new_state: {type: [string, 'null']}
+        trace_id: {type: [string, 'null']}
+    ErrorEnvelope:
+      type: object
+      required: [error, trace_id]
+      properties:
+        error:
+          type: object
+          required: [code, message, retryable]
+          properties:
+            code: {type: string}
+            message: {type: string}
+            retryable: {type: boolean}
+        trace_id: {type: string}
+  responses:
+    Error:
+      description: Standard error envelope
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorEnvelope'}

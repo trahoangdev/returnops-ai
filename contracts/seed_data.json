@@ -1,0 +1,182 @@
+{
+  "warning": "All records fictional. Domain user UUIDs are NOT Supabase Auth UUIDs. Seed app tables then securely create Auth users and bind public.users.auth_user_id using an isolated local-only bootstrap; never commit Auth user credentials or create auth.users via raw SQL.",
+  "tenant": {
+    "id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+    "slug": "demo-vn"
+  },
+  "users": [
+    {
+      "id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "demo_subject": "customer-a",
+      "role": "customer"
+    },
+    {
+      "id": "90e0ce79-88e1-591d-9e9e-91a96ea8d286",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "demo_subject": "customer-b",
+      "role": "customer"
+    },
+    {
+      "id": "24112a98-9761-55a5-8699-70c8fde98bbd",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "demo_subject": "reviewer-1",
+      "role": "reviewer"
+    },
+    {
+      "id": "29731acc-7be8-5b11-a0a2-ad3fa559ee51",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "demo_subject": "admin-1",
+      "role": "admin"
+    }
+  ],
+  "policy_version": {
+    "id": "POL-2026-001",
+    "status": "PUBLISHED",
+    "effective_from": "2026-01-01T00:00:00+07:00"
+  },
+  "evaluation_clock": "2026-10-15T10:00:00+07:00",
+  "orders": [
+    {
+      "fixture_key": "order_day14_standard",
+      "id": "ef7e5933-7151-56ef-b55c-a03700adffe9",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "order_number": "ORDER_DAY14_STANDARD",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_day14_standard",
+          "id": "2360dc64-ed62-5cca-9935-5a5836e7927f",
+          "sku": "ITEM_DAY14_STANDARD",
+          "category": "standard",
+          "status": "DELIVERED",
+          "paid_amount_vnd": 350000,
+          "delivered_at": "2026-10-01T12:00:00+07:00"
+        }
+      ]
+    },
+    {
+      "fixture_key": "order_day15_standard",
+      "id": "9c59c734-65c2-5388-8d61-1a3ad335330c",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "order_number": "ORDER_DAY15_STANDARD",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_day15_standard",
+          "id": "59f98c0f-d096-5b75-84ba-122ae697c966",
+          "sku": "ITEM_DAY15_STANDARD",
+          "category": "standard",
+          "status": "DELIVERED",
+          "paid_amount_vnd": 450000,
+          "delivered_at": "2026-09-30T10:00:00+07:00"
+        }
+      ]
+    },
+    {
+      "fixture_key": "order_damaged_day30",
+      "id": "2b09a8f1-f18a-596e-81c3-299b4f3a0be4",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "order_number": "ORDER_DAMAGED_DAY30",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_damaged_day30",
+          "id": "1bd49a04-1670-544d-b1cd-51e803ad20fa",
+          "sku": "ITEM_DAMAGED_DAY30",
+          "category": "standard",
+          "status": "DELIVERED",
+          "paid_amount_vnd": 280000,
+          "delivered_at": "2026-09-15T11:00:00+07:00"
+        }
+      ]
+    },
+    {
+      "fixture_key": "order_excluded_hygiene",
+      "id": "c54e8114-7e48-5b7b-9600-02cb221a5034",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "order_number": "ORDER_EXCLUDED_HYGIENE",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_hygiene",
+          "id": "4f3cfadb-4eab-5e75-8e87-1fd3f5c62913",
+          "sku": "ITEM_HYGIENE",
+          "category": "hygiene",
+          "status": "DELIVERED",
+          "paid_amount_vnd": 150000,
+          "delivered_at": "2026-10-10T11:00:00+07:00"
+        }
+      ]
+    },
+    {
+      "fixture_key": "order_large",
+      "id": "f467677e-8c2f-5817-ad1d-8adbfffb69b1",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "order_number": "ORDER_LARGE",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_large",
+          "id": "d2646ef5-3af2-5dfd-9ff2-263b98fe4c8a",
+          "sku": "ITEM_LARGE",
+          "category": "standard",
+          "status": "DELIVERED",
+          "paid_amount_vnd": 5500000,
+          "delivered_at": "2026-10-12T12:00:00+07:00"
+        }
+      ]
+    },
+    {
+      "fixture_key": "order_other_customer",
+      "id": "dca9db7c-bc8f-5b32-81d8-fcc20c00162f",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "90e0ce79-88e1-591d-9e9e-91a96ea8d286",
+      "order_number": "ORDER_OTHER_CUSTOMER",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_other_customer",
+          "id": "05ca8500-256c-5578-9c27-ab0131edfd45",
+          "sku": "ITEM_OTHER_CUSTOMER",
+          "category": "standard",
+          "status": "DELIVERED",
+          "paid_amount_vnd": 700000,
+          "delivered_at": "2026-10-10T14:00:00+07:00"
+        }
+      ]
+    },
+    {
+      "fixture_key": "order_not_delivered",
+      "id": "402e8dcf-6c94-5c83-99d0-88dcadc70b25",
+      "tenant_id": "3ceb12d3-c8e0-5ef3-942d-ed9db8d59152",
+      "customer_id": "3904a0c6-2ad1-55bb-91bb-e9fb7f4bcf22",
+      "order_number": "ORDER_NOT_DELIVERED",
+      "placed_at": "2026-09-10T10:00:00+07:00",
+      "policy_version_id": "POL-2026-001",
+      "items": [
+        {
+          "fixture_key": "item_not_delivered",
+          "id": "64dfd1ea-f9b3-5176-968e-ba972b7b9782",
+          "sku": "ITEM_NOT_DELIVERED",
+          "category": "standard",
+          "status": "SHIPPED",
+          "paid_amount_vnd": 250000,
+          "delivered_at": null
+        }
+      ]
+    }
+  ],
+  "supabase_auth_bootstrap": "For each synthetic users[].demo_subject, provision a demo identity through Supabase Auth local Admin tooling; store returned auth.users.id in public.users.auth_user_id. Leave null until bound. Inactive or unbound identities cannot call business routes."
+}

@@ -1,0 +1,39 @@
+# Fictional demo policy; NOT actual statutory or merchant policy.
+store: demo-vn
+version: POL-2026-001
+status: PUBLISHED
+effective_from: '2026-01-01T00:00:00+07:00'
+effective_to: null
+currency: VND
+business_timezone: Asia/Ho_Chi_Minh
+version_binding: ORDER_PURCHASE_DATE
+return_rules:
+  ordinary_return:
+    rule_ids: [R-001, R-002, R-003, R-004]
+    reasons: [changed_mind]
+    allowed_item_categories: [standard]
+    allowed_order_item_statuses: [DELIVERED]
+    max_days_after_delivery_inclusive: 14
+    required_condition: UNUSED
+    required_packaging_intact: true
+    excluded_categories: [hygiene, customized, digital, final_sale]
+  exception_claim:
+    rule_ids: [R-005, R-006, R-007]
+    reasons: [damaged, wrong_item]
+    max_days_after_delivery_inclusive: 30
+    required_evidence_refs_min: 1
+    evaluation_priority: [out_of_window, missing_evidence, in_window_with_evidence]
+    on_in_window_with_evidence: MANUAL_REVIEW
+    on_out_of_window: MANUAL_REVIEW
+    on_missing_evidence: MISSING_INFO
+refund_rules:
+  rule_ids: [R-008, R-009, R-010, R-011, R-012, R-013]
+  max_proposed_refund_vnd_inclusive: 5000000
+  price_source: order_items.paid_amount_vnd
+  all_refunds_require_human_approval: true
+  human_approval_role: reviewer
+  financial_effect: SIMULATED_LEDGER_ONLY
+  approval_binds: [return_request_id, order_item_id, policy_version_id, proposed_amount_vnd, proposal_hash]
+  issue_requires_status: APPROVED
+  operation_requires_idempotency: true
+outcomes: [ELIGIBLE, INELIGIBLE, MANUAL_REVIEW, MISSING_INFO]

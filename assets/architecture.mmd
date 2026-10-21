@@ -1,0 +1,20 @@
+flowchart TD
+  Customer[Customer UI - Next.js + Supabase Auth] --> API[FastAPI verified bearer and RBAC]
+  Reviewer[Reviewer UI - Next.js + Supabase Auth] --> API
+  API --> Auth[Supabase Auth validate token]
+  API --> AG[LangGraph conversation]
+  AG -->|read only| Orders[Order service]
+  AG --> Retriever[Policy RAG]
+  Retriever --> DB[(Supabase PostgreSQL + pgvector)]
+  Orders --> DB
+  AG --> Engine[Deterministic PolicyEngine]
+  Engine --> DB
+  API --> Returns[Return service]
+  Returns --> DB
+  API --> Approval[Authenticated reviewer approval]
+  Approval --> DB
+  Approval --> Outbox[Durable outbox]
+  Outbox --> Worker[Simulated refund worker]
+  Worker --> DB
+  API --> OTel[Redacted tracing and evals]
+  AG --> OTel
